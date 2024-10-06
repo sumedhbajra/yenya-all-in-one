@@ -1,19 +1,17 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-import { AiOutlineLayout, AiOutlineTool } from "react-icons/ai";
+import { AiOutlineTool, AiOutlineUser } from "react-icons/ai";
 
 export default function MainNav() {
-  const navLinkClass = `
-
+  const navLinkClass: string = `
     flex items-center gap-3 
     text-gray-600 text-base font-medium 
     p-6 transition-all 
     hover:text-gray-800 hover:bg-gray-50 
     hover:rounded-md
-    text-3xl
+    text-2xl
   `;
 
-  const activeClass = `
+  const activeClass: string = `
     text-gray-800 bg-gray-50 rounded-md
   `;
   return (
@@ -26,8 +24,8 @@ export default function MainNav() {
             }
             to={"/"}
           >
-            <AiOutlineLayout />
-            <span>Dashboard</span>
+            <AiOutlineUser />
+            <span>My Profile</span>
           </NavLink>
         </li>
 

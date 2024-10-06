@@ -1,4 +1,3 @@
-import React from "react";
 import YenyaLogo from "./YenyaLogo";
 import MainNav from "./MainNav";
 
