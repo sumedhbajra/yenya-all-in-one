@@ -1,8 +1,5 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEmployee } from "../hooks/useEmployee";
-import { getAllEmployee } from "../services/apiEmployee";
-import { useEffect, useState } from "react";
 
 export type EmployeeProp = {
   employeeId: string;
@@ -18,8 +15,6 @@ export type EmployeeProp = {
 };
 
 export default function FormLayout() {
-  const [data, setData] = useState();
-
   const formik = useFormik<EmployeeProp>({
     initialValues: {
       employeeId: "",
@@ -80,16 +75,6 @@ export default function FormLayout() {
       return;
     },
   });
-
-  const getAll = async () => {
-    const data = await getAllEmployee();
-    setData(data);
-  };
-
-  console.log(data);
-  useEffect(() => {
-    getAll();
-  }, []);
 
   const {
     handleSubmit,
