@@ -1,5 +1,8 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useEmployee } from "../hooks/useEmployee";
+import { getAllEmployee } from "../services/apiEmployee";
+import { useEffect, useState } from "react";
 
 export type EmployeeProp = {
   employeeId: string;
@@ -15,6 +18,8 @@ export type EmployeeProp = {
 };
 
 export default function FormLayout() {
+  const [data, setData] = useState();
+
   const formik = useFormik<EmployeeProp>({
     initialValues: {
       employeeId: "",
@@ -72,8 +77,19 @@ export default function FormLayout() {
     }),
     onSubmit: (values) => {
       console.log(values);
+      return;
     },
   });
+
+  const getAll = async () => {
+    const data = await getAllEmployee();
+    setData(data);
+  };
+
+  console.log(data);
+  useEffect(() => {
+    getAll();
+  }, []);
 
   const {
     handleSubmit,
@@ -100,6 +116,7 @@ export default function FormLayout() {
             value={values.fullName}
             onChange={handleChange}
             placeholder="Full Name"
+            onBlur={handleBlur}
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 
             rounded shadow-sm p-3 mt-1"
@@ -121,6 +138,7 @@ export default function FormLayout() {
             value={values.age}
             onChange={handleChange}
             placeholder="Age"
+            onBlur={handleBlur}
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 rounded shadow-sm p-3 mt-1"
           />
@@ -140,6 +158,7 @@ export default function FormLayout() {
             id="email"
             value={values.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="abc@gmail.com"
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 shadow-sm p-3 mt-1"
@@ -163,6 +182,7 @@ export default function FormLayout() {
             value={values.university}
             onChange={handleChange}
             placeholder="University"
+            onBlur={handleBlur}
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 rounded shadow-sm p-3 mt-1"
           />
@@ -183,6 +203,7 @@ export default function FormLayout() {
             value={values.dob}
             onChange={handleChange}
             placeholder="Date of Birth"
+            onBlur={handleBlur}
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 rounded shadow-sm p-3 mt-1"
           />
@@ -202,6 +223,7 @@ export default function FormLayout() {
                 value="male"
                 checked={values.gender === "male"}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 disabled={isSubmitting}
                 className="mr-1"
               />
@@ -214,6 +236,7 @@ export default function FormLayout() {
                 value="female"
                 checked={values.gender === "female"}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 disabled={isSubmitting}
                 className="mr-1"
               />
@@ -236,6 +259,7 @@ export default function FormLayout() {
             id="contactNo"
             value={values.contactNo}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Contact Number"
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 rounded shadow-sm p-3 mt-1"
@@ -254,6 +278,7 @@ export default function FormLayout() {
             type="text"
             name="role"
             id="role"
+            onBlur={handleBlur}
             value={values.role}
             onChange={handleChange}
             placeholder="Role"
@@ -277,6 +302,7 @@ export default function FormLayout() {
             value={values.position}
             onChange={handleChange}
             placeholder="Position"
+            onBlur={handleBlur}
             disabled={isSubmitting}
             className="w-full border border-gray-300 bg-gray-50 rounded shadow-sm p-3 mt-1"
           />

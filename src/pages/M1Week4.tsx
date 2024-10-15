@@ -46,7 +46,13 @@ function Counter() {
         {count}
       </span>
       <span className="col-span-2">
-        <button className={buttonDesign} onClick={() => setCount(count - 1)}>
+        <button
+          className={buttonDesign}
+          onClick={() => {
+            if (count === 0) return;
+            setCount(count - 1);
+          }}
+        >
           -
         </button>
       </span>
