@@ -1,8 +1,10 @@
-import React from "react";
+interface Error {
+  error: string;
+}
 
-const TerminalCard: React.FC = () => {
+const TerminalCard = ({ error }: Error) => {
   return (
-    <div className="p-4 border border-gray-300 rounded-xl bg-gray-200 backdrop-blur-sm min-w-[344px] col-start-2 col-span-2 w-20 place-self-center">
+    <div className="p-4 border border-gray-300 rounded-xl bg-gray-200 backdrop-blur-sm min-w-[344px] col-start-2 col-span-2 w-auto place-self-center">
       <div className="flex flex-col gap-4 relative z-10 border border-gray-600 rounded-lg overflow-hidden">
         <div className="flex flex-col">
           <div className="flex items-center justify-between overflow-hidden min-h-[40px] px-3 bg-gray-800 rounded-t-lg">
@@ -47,9 +49,9 @@ const TerminalCard: React.FC = () => {
           <div className="flex flex-col relative rounded-b-lg bg-black overflow-x-auto p-4 text-white whitespace-nowrap">
             <pre className="flex flex-row items-center">
               <code className="text-gray-600"> -&nbsp;</code>
-              <code className="text-pink-600">Movie&nbsp;</code>
+              <code className="text-pink-600">Message: &nbsp;</code>
               <code className="cmd relative" data-cmd="create-react-app@latest">
-                not found
+                {error}
               </code>
             </pre>
           </div>

@@ -4,16 +4,17 @@ import { AiOutlineTool, AiOutlineUser } from "react-icons/ai";
 export default function MainNav() {
   const navLinkClass: string = `
     flex items-center gap-3 
-    text-gray-600 text-base font-medium 
+    text-gray-600 
     p-6 transition-all 
     hover:text-gray-800 hover:bg-gray-50 
     hover:rounded-md
-    text-2xl
+    text-3xl
   `;
 
   const activeClass: string = `
     text-gray-800 bg-gray-50 rounded-md
   `;
+
   return (
     <nav>
       <ul className="flex flex-col gap-3.5">

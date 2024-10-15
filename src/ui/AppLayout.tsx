@@ -13,7 +13,7 @@ export default function AppLayout() {
 
   const Main = styled.main`
     background-color: var(--color-grey-50);
-    padding: 4rem 4.8rem 6.45rem;
+    padding: 2.4rem 4.4rem 6.45rem;
     overflow: scroll;
   `;
 
@@ -23,6 +23,8 @@ export default function AppLayout() {
     display: flex;
     flex-direction: column;
     gap: 3.2rem;
+    padding: 20px;
+    height: 100%;
   `;
 
   return (

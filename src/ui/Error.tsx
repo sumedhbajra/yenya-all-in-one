@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Error() {
   return (
     <div className=" p-4 rounded-lg col-span-2 w-96 col-start-2 place-self-center">
@@ -13,7 +11,7 @@ export default function Error() {
           <span className="word">country</span>
           <span className="word">life</span>
 
-          <style jsx>{`
+          <style>{`
             .card {
               /* color used to softly clip top and bottom of the .words container */
               --bg-color: #212121;
