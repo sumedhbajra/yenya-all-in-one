@@ -13,7 +13,16 @@ export async function getAllEmployee() {
   }
 }
 
-export function createEmployee() {}
+export async function createEmployee(data) {
+  try {
+    const res = await fetch(`${BASEURL}/employee`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Get One Employee
 export function getEmployee() {

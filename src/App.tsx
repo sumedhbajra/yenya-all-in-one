@@ -8,9 +8,6 @@ import M2Week3 from "./pages/M2Week3";
 import M2Week4 from "./pages/M2Week4";
 
 function App() {
-  const he: string = "hello";
-  console.log(he);
-
   return (
     <div className="">
       <BrowserRouter>

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
-import TableInfo from "../ui/TableInfo";
-import FormLayout from "../ui/FormLayout";
+import TableInfo from "../features/employee/TableInfo";
+import FormLayout from "../features/employee/FormLayout";
 import { ReactElement } from "react";
 
 interface OptionProp {

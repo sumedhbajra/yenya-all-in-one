@@ -1,7 +1,11 @@
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { createNewEmployee, updateEmployee } from "./employeeSlice";
+import { createEmployee } from "../../services/apiEmployee";
+import { useSearchParams } from "react-router-dom";
 
-export type EmployeeProp = {
+export type EmployeeType = {
   employeeId: string;
   fullName: string;
   age: number;
@@ -14,19 +18,39 @@ export type EmployeeProp = {
   contactNo: string;
 };
 
-export default function FormLayout() {
-  const formik = useFormik<EmployeeProp>({
+export interface EmployeeProp {
+  employeeId?: string;
+  fullName?: string;
+  age?: number;
+  university?: string;
+  dob?: string;
+  email?: string;
+  gender?: "male" | "female";
+  role?: "front-end" | "back-end" | "database" | "figma" | "qa";
+  position?: "intern" | "trainee" | "junior" | "mid" | "senior";
+  contactNo?: string;
+}
+
+export default function FormLayout({
+  employee,
+}: {
+  employee: EmployeeProp | null | undefined;
+}) {
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const formik = useFormik<EmployeeType>({
     initialValues: {
-      employeeId: "",
-      fullName: "",
-      age: 0,
-      university: "",
-      dob: new Date().toISOString(),
-      email: "",
-      gender: "male",
-      role: "front-end",
-      position: "intern",
-      contactNo: "",
+      employeeId: employee?.employeeId || "",
+      fullName: employee?.fullName || "",
+      age: employee?.age || 0,
+      university: employee?.university || "",
+      dob: employee?.dob || new Date().toISOString(),
+      email: employee?.email || "",
+      gender: employee?.gender || "male",
+      role: employee?.role || "front-end",
+      position: employee?.position || "intern",
+      contactNo: employee?.contactNo || "",
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -71,7 +95,17 @@ export default function FormLayout() {
         .required("Please provide a contact number."),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      if (employee) {
+        dispatch(updateEmployee(2));
+      } else {
+        // dispatch(createNewEmployee(2));
+        // console.log(values);
+        //
+        createEmployee(values);
+        searchParams.set("show", "table");
+        setSearchParams(searchParams);
+      }
+
       return;
     },
   });
