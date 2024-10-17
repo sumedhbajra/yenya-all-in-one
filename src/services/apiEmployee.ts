@@ -1,42 +1,95 @@
+import { EmployeeType } from "../features/employee/employeeSlice";
+
 const BASEURL: string = "http://localhost:9000";
+
 // Get All Employee
-export async function getAllEmployee() {
+export function getAllEmployee() {
   try {
-    const res = await fetch(`${BASEURL}/employee`);
-    if (!res.ok) throw new Error("Data isn't fetched.");
+    async function getData() {
+      const res = await fetch(`${BASEURL}/employee`);
+      if (!res.ok) throw new Error("Data isn't fetched.");
 
-    const data = await res.json();
+      const data = await res.json();
 
-    return data;
+      return data;
+    }
+
+    return getData();
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function createEmployee(data) {
+export async function createEmployee(data: EmployeeType) {
   try {
     const res = await fetch(`${BASEURL}/employee`, {
       method: "POST",
       body: JSON.stringify(data),
     });
+    if (!res.ok) {
+      throw new Error(`Error: ${res.status} ${res.statusText}`);
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
 // Get One Employee
-export function getEmployee() {
-  return;
-}
+// export async function getEmployee(data: EmployeeType) {
+//   try {
+//     const res = await fetch(`${BASEURL}/employee`, {
+//       method: "PATCH",
+//       body: JSON.stringify(data),
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // Update Employee
-export function updateEmployee() {
-  return;
+export function updateEmployeeAPI(data: EmployeeType) {
+  try {
+    async function getData() {
+      const response = await fetch(`${BASEURL}/employee/${data.id}`, {
+        method: "PUT", // Use PATCH for partial updates
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+        getAllEmployee();
+        const data = await response.json();
+        console.log("Employee updated successfully:", data);
+      } else {
+        console.error("Failed to update employee");
+      }
+    }
+    getData();
+  } catch (error) {
+    console.error("Error updating employee:", error);
+  }
 }
 
 // Delete Employee
-export function deleteEmployee() {
-  return;
+export function deleteEmployeeAPI(id: string) {
+  try {
+    async function deleteData() {
+      const res = await fetch(`${BASEURL}/employee/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
+      }
+    }
+    deleteData();
+  } catch (error) {
+    console.error("Error while deleting employee:", error);
+  }
 }
 
 // async function fetchEmployee() {

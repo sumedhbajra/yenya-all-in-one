@@ -21,6 +21,7 @@ export default function ShowTable({
     pageIndex: 0,
     pageSize: 5,
   });
+
   const table = useReactTable({
     data,
     columns,
@@ -47,8 +48,8 @@ export default function ShowTable({
     <>
       <table className="table-auto w-full">
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+          {table.getHeaderGroups().map((headerGroup, key) => (
+            <tr key={key}>
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className="px-4 py-2">
                   {flexRender(
@@ -61,9 +62,9 @@ export default function ShowTable({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row, key) => (
             <>
-              <tr key={row.id}>
+              <tr key={key}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="border px-4 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -74,6 +75,7 @@ export default function ShowTable({
           ))}
         </tbody>
       </table>
+
       <TableOperations table={table} />
     </>
   );

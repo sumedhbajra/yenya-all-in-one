@@ -1,22 +1,13 @@
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { createNewEmployee, updateEmployee } from "./employeeSlice";
-import { createEmployee } from "../../services/apiEmployee";
-import { useSearchParams } from "react-router-dom";
-
-export type EmployeeType = {
-  employeeId: string;
-  fullName: string;
-  age: number;
-  university: string;
-  dob: string;
-  email: string;
-  gender: "male" | "female"; // Only male or female
-  role: "front-end" | "back-end" | "database" | "figma" | "qa";
-  position: "intern" | "trainee" | "junior" | "mid" | "senior";
-  contactNo: string;
-};
+import {
+  createNewEmployee,
+  EmployeeType,
+  updateEmployee,
+} from "./employeeSlice";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 export interface EmployeeProp {
   employeeId?: string;
@@ -29,19 +20,25 @@ export interface EmployeeProp {
   role?: "front-end" | "back-end" | "database" | "figma" | "qa";
   position?: "intern" | "trainee" | "junior" | "mid" | "senior";
   contactNo?: string;
+  id?: string;
 }
 
 export default function FormLayout({
   employee,
+  close,
+  setDataUpdate,
 }: {
-  employee: EmployeeProp | null | undefined;
+  employee?: EmployeeProp | null | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  close?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setDataUpdate: any;
 }) {
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const formik = useFormik<EmployeeType>({
     initialValues: {
-      employeeId: employee?.employeeId || "",
+      employeeId: employee?.employeeId || uuidv4(),
       fullName: employee?.fullName || "",
       age: employee?.age || 0,
       university: employee?.university || "",
@@ -51,6 +48,7 @@ export default function FormLayout({
       role: employee?.role || "front-end",
       position: employee?.position || "intern",
       contactNo: employee?.contactNo || "",
+      id: employee?.id || "",
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -96,19 +94,18 @@ export default function FormLayout({
     }),
     onSubmit: (values) => {
       if (employee) {
-        dispatch(updateEmployee(2));
+        dispatch(updateEmployee(values));
+        setDataUpdate((e: number) => e + 1);
+        close();
       } else {
-        // dispatch(createNewEmployee(2));
-        // console.log(values);
-        //
-        createEmployee(values);
-        searchParams.set("show", "table");
-        setSearchParams(searchParams);
+        dispatch(createNewEmployee({ ...values, id: uuidv4() }));
+        setDataUpdate((e: number) => e + 1);
+        navigate("/m2-week1/table");
       }
-
-      return;
     },
   });
+
+  const navigate = useNavigate();
 
   const {
     handleSubmit,

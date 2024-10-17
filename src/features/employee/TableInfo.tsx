@@ -1,34 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
-import { getAllEmployee } from "../../services/apiEmployee";
+import { useMemo, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import ShowTable from "../../components/ShowTable";
 import Modal from "../../ui/Modal";
 import FormLayout, { EmployeeProp } from "./FormLayout";
 import Button from "../../ui/Button";
+import { useDispatch } from "react-redux";
+import { deleteEmployee } from "./employeeSlice";
 
-export default function TableInfo() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function TableInfo({ myData, getAll, setDataUpdate }: any) {
+  const data = useMemo(() => myData, [myData]);
+
   return (
     <div className="h-full">
-      <MyComponent />
+      <MyComponent data={data} getAll={getAll} setDataUpdate={setDataUpdate} />
     </div>
   );
 }
 
-const MyComponent = () => {
-  // Sample data
-  const [myData, setData] = useState();
-  const data = useMemo(() => myData, [myData]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MyComponent = ({ data, setDataUpdate }: any) => {
   const [currentEmployee, setCurrentEmployee] = useState<EmployeeProp | null>();
-
-  const getAll = async () => {
-    const data = await getAllEmployee();
-    setData(data);
-  };
-
-  useEffect(() => {
-    getAll();
-  }, []);
 
   // Define columns
   const columns = useMemo(
@@ -73,7 +66,7 @@ const MyComponent = () => {
                 className="p-2 rounded-lg 
                 cursor-pointer"
                 onClick={() => {
-                  console.log(row.original, "HAHAHA");
+                  setCurrentEmployee(row.original);
                 }}
               >
                 <Modal.Open opens="delete">
@@ -95,39 +88,66 @@ const MyComponent = () => {
 
         {/* Can be defined anywhere but within Modal Component. */}
         <Modal.Window name="edit">
-          <EditUser currentEmployee={currentEmployee} />
+          <EditUser
+            currentEmployee={currentEmployee}
+            close={close}
+            setDataUpdate={setDataUpdate}
+          />
         </Modal.Window>
         <Modal.Window name="delete">
-          <DeleteUser close={close} />
+          <DeleteUser
+            close={close}
+            currentEmployeeId={currentEmployee?.id}
+            setDataUpdate={setDataUpdate}
+          />
         </Modal.Window>
       </Modal>
     </>
   );
 };
 
-function EditUser({
-  currentEmployee,
-}: {
-  currentEmployee: EmployeeProp | null | undefined;
-}) {
-  return (
-    <div>
-      <FormLayout employee={currentEmployee} />
-    </div>
-  );
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function DeleteUser({ close }: any) {
+function DeleteUser({ close, currentEmployeeId, setDataUpdate }: any) {
+  const dispatch = useDispatch();
   return (
     <div>
       <div>
         <h1>Warning: Delete User</h1>
         <p>Are you sure you want to delete this user.</p>
         <strong></strong>
-        <Button variation="danger" text="Delete" />
+        <Button
+          variation="danger"
+          text="Delete"
+          onClick={() => {
+            dispatch(deleteEmployee(currentEmployeeId));
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            setDataUpdate((e: any) => e + 1);
+          }}
+        />
         <Button variation="secondary" text="Cancel" onClick={close} />
       </div>
+    </div>
+  );
+}
+
+function EditUser({
+  currentEmployee,
+  close,
+  setDataUpdate,
+}: {
+  currentEmployee: EmployeeProp | null | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  close: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setDataUpdate: any;
+}) {
+  return (
+    <div>
+      <FormLayout
+        employee={currentEmployee}
+        close={close}
+        setDataUpdate={setDataUpdate}
+      />
     </div>
   );
 }
