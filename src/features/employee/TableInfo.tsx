@@ -11,6 +11,8 @@ import { deleteEmployee } from "./employeeSlice";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function TableInfo({ myData, getAll, setDataUpdate }: any) {
   const data = useMemo(() => myData, [myData]);
+  console.log(data?.length, "HAHA");
+  console.log(data, "HAHA");
 
   return (
     <div className="h-full">
@@ -122,6 +124,7 @@ function DeleteUser({ close, currentEmployeeId, setDataUpdate }: any) {
             dispatch(deleteEmployee(currentEmployeeId));
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             setDataUpdate((e: any) => e + 1);
+            close();
           }}
         />
         <Button variation="secondary" text="Cancel" onClick={close} />

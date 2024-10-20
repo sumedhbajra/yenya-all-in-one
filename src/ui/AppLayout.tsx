@@ -2,13 +2,13 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import SideBar from "./SideBar";
-
-const StyledAppLayout = styled.div`
-  display: grid;
-  grid-template-columns: 26rem 1fr;
-  grid-template-rows: auto 1fr;
-  height: 100vh;
-`;
+import {
+  createContext,
+  SetStateAction,
+  useState,
+  Dispatch,
+  useContext,
+} from "react";
 
 const Main = styled.main`
   background-color: var(--color-grey-50);
@@ -17,7 +17,7 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  max-width: 120rem;
+  max-width: 150rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -26,16 +26,38 @@ const Container = styled.div`
   height: 100%;
 `;
 
+export interface SidebarContextProp {
+  expanded: boolean;
+  setExpanded: Dispatch<SetStateAction<boolean>>;
+}
+
+const SidebarContext = createContext<SidebarContextProp>({
+  expanded: true,
+  setExpanded: () => {},
+});
+
 export default function AppLayout() {
+  const [expanded, setExpanded] = useState<boolean>(false);
   return (
-    <StyledAppLayout>
-      <Header />
-      <SideBar />
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
-    </StyledAppLayout>
+    <SidebarContext.Provider value={{ expanded, setExpanded }}>
+      <div
+        className={`grid h-screen ${
+          expanded ? "grid-cols-[26rem_1fr]" : "grid-cols-[8rem_1fr]"
+        } grid-rows-[auto_1fr]`}
+      >
+        <Header title="YenyaSoft Internship & Trainee Program" size="large" />
+        <SideBar />
+        <Main>
+          <Container>
+            <Outlet />
+          </Container>
+        </Main>
+      </div>
+    </SidebarContext.Provider>
   );
+}
+
+export function useSidebar() {
+  const context = useContext(SidebarContext);
+  return context;
 }

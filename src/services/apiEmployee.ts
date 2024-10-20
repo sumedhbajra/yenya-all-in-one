@@ -4,13 +4,14 @@ const BASEURL: string = "http://localhost:9000";
 
 // Get All Employee
 export function getAllEmployee() {
+  console.log("haha");
   try {
     async function getData() {
       const res = await fetch(`${BASEURL}/employee`);
       if (!res.ok) throw new Error("Data isn't fetched.");
 
       const data = await res.json();
-
+      console.log(data, "HAHA");
       return data;
     }
 

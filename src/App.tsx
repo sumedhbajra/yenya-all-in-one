@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { getAllEmployee } from "./services/apiEmployee";
 
 function App() {
-  const [myData, setData] = useState();
+  const [myData, setData] = useState([]);
   const [dataUpdate, setDataUpdate] = useState(0);
 
   const getAll = async () => {
@@ -26,7 +26,6 @@ function App() {
   useEffect(() => {
     getAll();
   }, [dataUpdate]);
-
 
   return (
     <div className="">

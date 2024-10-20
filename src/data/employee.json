@@ -1,69 +1,56 @@
 {
   "employee": [
     {
-      "employeeId": "005",
-      "fullName": "Bikash Rai",
+      "employeeId": "EMP002",
+      "fullName": "Pratiksha Adhikari Sir",
       "age": 22,
-      "university": "Nepal Engineering College",
-      "dob": "2002-02-12T00:00:00Z",
-      "email": "bikash.rai@example.com",
-      "gender": "male",
-      "role": "front-end",
-      "position": "intern",
-      "contactNo": "9800000005",
-      "id": "c224"
-    },
-    {
-      "employeeId": "012",
-      "fullName": "Bina Dhungana",
-      "age": 23,
-      "university": "Pokhara University",
-      "dob": "2001-04-21T00:00:00Z",
-      "email": "bina.dhungana@example.com",
-      "gender": "female",
-      "role": "front-end",
-      "position": "intern",
-      "contactNo": "9800000012",
-      "id": "c87b"
-    },
-    {
-      "employeeId": "013",
-      "fullName": "Kamal Lama",
-      "age": 24,
       "university": "Kathmandu University",
-      "dob": "2000-03-30T00:00:00Z",
-      "email": "kamal.lama@example.com",
-      "gender": "male",
-      "role": "front-end",
-      "position": "intern",
-      "contactNo": "9800000013",
-      "id": "d049"
-    },
-    {
-      "employeeId": "014",
-      "fullName": "Nirmala Rana",
-      "age": 25,
-      "university": "Purbanchal University",
-      "dob": "1999-09-16T00:00:00Z",
-      "email": "nirmala.rana@example.com",
+      "dob": "2001-03-22",
+      "email": "pratiksha.adhikari@example.com",
       "gender": "female",
-      "role": "front-end",
+      "role": "back-end",
       "position": "intern",
-      "contactNo": "9800000014",
-      "id": "af6f"
+      "contactNo": "9807654321",
+      "id": "2"
     },
     {
-      "id": "59be188f-079a-4096-a630-4b94d7ef00fc",
-      "employeeId": "db776dd7-a10f-4d14-a35d-ad0e07c7a94d",
-      "fullName": "Sufal R",
+      "employeeId": "EMP005",
+      "fullName": "Santosh Maharjan",
+      "age": 25,
+      "university": "Tribhuvan University",
+      "dob": "1994-07-07",
+      "email": "santosh.maharjan@example.com",
+      "gender": "male",
+      "role": "qa",
+      "position": "senior",
+      "contactNo": "9841122334",
+      "id": "5"
+    },
+    {
+      "id": "ed5344a2-a747-41f9-8e2e-073cc3d00b6d",
+      "employeeId": "e46996e4-a930-4aac-bc01-0ae374af4795",
+      "fullName": "Sumedh R. Bajracharya",
       "age": 21,
       "university": "Bedforeshire",
-      "dob": "2024-10-17T11:58:01.754Z",
-      "email": "sufal@gmail.com",
+      "dob": "2002-11-12",
+      "email": "sumedh@gmail.com",
+      "gender": "male",
+      "role": "front-end",
+      "position": "trainee",
+      "contactNo": "9768445957"
+    },
+    {
+      "id": "0a3ea914-c2bd-4fef-aaad-3995910623f4",
+      "employeeId": "949e3358-6bb0-4dfb-8c70-feb1204266e8",
+      "fullName": "Sumedh R. Bajracharya",
+      "age": 21,
+      "university": "Bedforeshire",
+      "dob": "2024-10-01",
+      "email": "sumedh@gmail.com",
       "gender": "male",
       "role": "front-end",
       "position": "intern",
-      "contactNo": "98767823"
+      "contactNo": "9768445957"
     }
   ]
 }

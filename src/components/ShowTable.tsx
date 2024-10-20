@@ -39,42 +39,63 @@ export default function ShowTable({
     state: { pagination },
   });
 
-  if (!data)
+  console.log(data?.length);
+
+  if (data?.length === 0)
     return (
-      <div>No data [Please go on the terminal & hit "npm run server"]</div>
+      <div>
+        No data or else may be empty [Please go on the terminal & hit "npm run
+        server"]
+      </div>
     );
 
   return (
     <>
-      <table className="table-auto w-full">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup, key) => (
-            <tr key={key}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="px-4 py-2">
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row, key) => (
-            <>
-              <tr key={key}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="border px-4 py-2">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+      <div className="overflow-hidden rounded-lg shadow-md">
+        <table className="table-auto w-full bg-white">
+          <thead className="bg-gray-100">
+            {table.getHeaderGroups().map((headerGroup, key) => (
+              <tr key={key} className="text-left">
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="px-6 py-3 text-2xl font-semibold text-gray-600 border-b"
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
                 ))}
               </tr>
-            </>
-          ))}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+        </table>
+        <div className="max-h-96 overflow-y-auto">
+          <table className="table-auto w-full bg-white">
+            <tbody>
+              {table.getRowModel().rows.map((row, key) => (
+                <tr
+                  key={key}
+                  className="hover:bg-gray-50 transition-colors duration-200"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="px-6 py-3 border-b text-gray-700 text-2xl"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <TableOperations table={table} />
     </>
