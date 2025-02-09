@@ -23,14 +23,18 @@ export function getAllEmployee() {
 
 export async function createEmployee(data: EmployeeType) {
   try {
+    alert('Employee success');
     const res = await fetch(`${BASEURL}/employee`, {
       method: "POST",
       body: JSON.stringify(data),
     });
+    alert('Employee success');
     if (!res.ok) {
+      alert('Employee success');
       throw new Error(`Error: ${res.status} ${res.statusText}`);
     }
   } catch (error) {
+    alert('Employee failed');
     console.log(error);
   }
 }

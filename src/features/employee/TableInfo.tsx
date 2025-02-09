@@ -9,14 +9,14 @@ import { useDispatch } from "react-redux";
 import { deleteEmployee } from "./employeeSlice";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function TableInfo({ myData, getAll, setDataUpdate }: any) {
+export default function TableInfo({ myData, setDataUpdate }: any) {
   const data = useMemo(() => myData, [myData]);
   console.log(data?.length, "HAHA");
   console.log(data, "HAHA");
 
   return (
     <div className="h-full">
-      <MyComponent data={data} getAll={getAll} setDataUpdate={setDataUpdate} />
+      <MyComponent data={data} setDataUpdate={setDataUpdate} />
     </div>
   );
 }
@@ -24,6 +24,7 @@ export default function TableInfo({ myData, getAll, setDataUpdate }: any) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MyComponent = ({ data, setDataUpdate }: any) => {
   const [currentEmployee, setCurrentEmployee] = useState<EmployeeProp | null>();
+
 
   // Define columns
   const columns = useMemo(
@@ -82,6 +83,7 @@ const MyComponent = ({ data, setDataUpdate }: any) => {
     ],
     []
   );
+
 
   return (
     <>

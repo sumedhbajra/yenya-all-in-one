@@ -1,0 +1,32 @@
+{
+  "foodList": [
+    {
+      "id": "2",
+      "name": "Greek Salad",
+      "category": "Salad",
+      "price": 6.49,
+      "description": "Fresh veggies with feta cheese and olives."
+    },
+    {
+      "id": "5",
+      "name": "Lobster Roll 1",
+      "category": "Seafood",
+      "price": 1,
+      "description": "Fresh lobster meat in a buttery roll."
+    },
+    {
+      "id": "956",
+      "name": "Micro-improvements",
+      "price": 999,
+      "category": "personal development human",
+      "description": "priceless"
+    },
+    {
+      "id": "845",
+      "name": "Washington DC",
+      "price": 9,
+      "category": "Capitcal",
+      "description": "USA"
+    }
+  ]
+}

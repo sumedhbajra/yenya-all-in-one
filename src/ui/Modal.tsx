@@ -47,13 +47,14 @@ function Open({
   return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-function Window({ children, name }: { children: ReactElement; name: string }) {
+function Window({ children, name }: { children: (onCloseModal: () => void) => ReactElement; name: string }) {
   const modalContext = useContext(ModalContext);
 
   if (!modalContext)
     throw new Error("Should be used withing the Modal Provider.");
 
   const { openName, close } = modalContext;
+
 
   const { ref } = useModal(close);
 
@@ -75,7 +76,12 @@ function Window({ children, name }: { children: ReactElement; name: string }) {
             <RxCross1 size={32} />
           </button>
         </div>
-        {cloneElement(children, { close })}
+        {/* {cloneElement(children, { onCloseModal: close })} */}
+        {children(close)}
+
+        {/* <div>
+          <button onClick={close}>Cancel</button>
+        </div> */}
       </div>
     </div>
   );

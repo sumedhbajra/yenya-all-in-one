@@ -10,10 +10,15 @@ import TableInfo from "./features/employee/TableInfo";
 import FormLayout from "./features/employee/FormLayout";
 import { useEffect, useState } from "react";
 import { getAllEmployee } from "./services/apiEmployee";
+import { useQuery } from "@tanstack/react-query";
+import { useReactTable } from "@tanstack/react-table";
+
 
 function App() {
   const [myData, setData] = useState([]);
   const [dataUpdate, setDataUpdate] = useState(0);
+
+
 
   const getAll = async () => {
     const data = await getAllEmployee();
@@ -23,9 +28,25 @@ function App() {
     return data;
   };
 
-  useEffect(() => {
-    getAll();
-  }, [dataUpdate]);
+  // const { isLoading, error, data } = useQuery({ queryKey: 'employee' }
+  //   , getAll
+  // );
+
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['employee'],
+    queryFn: getAll
+  })
+
+  console.log({ isLoading });
+  console.log({ error });
+  console.log({ data });
+  console.log({ myData });
+
+
+  // useEffect(() => {
+  //   getAll();
+  // }, [dataUpdate]);
 
   return (
     <div className="">
@@ -41,8 +62,7 @@ function App() {
                 path="table"
                 element={
                   <TableInfo
-                    myData={myData}
-                    getAll={getAll}
+                    myData={data ?? []}
                     setDataUpdate={setDataUpdate}
                   />
                 }

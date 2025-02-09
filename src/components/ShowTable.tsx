@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   flexRender,
   getCoreRowModel,
@@ -9,6 +10,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
+
 
 export default function ShowTable({
   data,
@@ -21,6 +23,8 @@ export default function ShowTable({
     pageIndex: 0,
     pageSize: 5,
   });
+
+  const queryClient = useQueryClient();
 
   const table = useReactTable({
     data,
@@ -41,6 +45,18 @@ export default function ShowTable({
 
   console.log(data?.length);
 
+  const mutatation = useMutation({
+    mutationFn: async (data: any) => {
+      alert('hello world');
+      console.log(data, "MYDATAaaas");
+      // queryClient.invalidateQueries({ queryKey: ['employee'] });
+    },
+    onSuccess: () => {
+      alert('success triggered');
+      // queryClient.invalidateQueries({ queryKey: ['employee'] });
+    }
+  }, queryClient);
+
   if (data?.length === 0)
     return (
       <div>
@@ -52,6 +68,13 @@ export default function ShowTable({
   return (
     <>
       <div className="overflow-hidden rounded-lg shadow-md">
+
+
+        <button onClick={() => {
+          mutatation.mutate({ myKey: "myData" });
+        }}>Click here!</button>
+
+
         <table className="table-auto w-full bg-white">
           <thead className="bg-gray-100">
             {table.getHeaderGroups().map((headerGroup, key) => (

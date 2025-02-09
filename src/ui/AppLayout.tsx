@@ -12,8 +12,9 @@ import {
 
 const Main = styled.main`
   background-color: var(--color-grey-50);
-  padding: 2.4rem 4.4rem 6.45rem;
+  padding: 2.4rem 4.4rem;
   overflow: scroll;
+  height: 100%;
 `;
 
 const Container = styled.div`
@@ -33,7 +34,7 @@ export interface SidebarContextProp {
 
 const SidebarContext = createContext<SidebarContextProp>({
   expanded: true,
-  setExpanded: () => {},
+  setExpanded: () => { },
 });
 
 export default function AppLayout() {
@@ -41,9 +42,8 @@ export default function AppLayout() {
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded }}>
       <div
-        className={`grid h-screen ${
-          expanded ? "grid-cols-[26rem_1fr]" : "grid-cols-[8rem_1fr]"
-        } grid-rows-[auto_1fr]`}
+        className={`grid h-screen ${expanded ? "grid-cols-[26rem_1fr]" : "grid-cols-[8rem_1fr]"
+          } grid-rows-[auto_1fr]`}
       >
         <Header title="YenyaSoft Internship & Trainee Program" size="large" />
         <SideBar />
@@ -57,6 +57,7 @@ export default function AppLayout() {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useSidebar() {
   const context = useContext(SidebarContext);
   return context;

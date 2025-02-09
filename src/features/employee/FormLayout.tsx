@@ -4,10 +4,14 @@ import * as Yup from "yup";
 import {
   createNewEmployee,
   EmployeeType,
-  updateEmployee,
 } from "./employeeSlice";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import {
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
+// import { useMutation, useQueryClient } from "react-query";
 
 export interface EmployeeProp {
   employeeId?: string;
@@ -26,7 +30,6 @@ export interface EmployeeProp {
 export default function FormLayout({
   employee,
   close,
-  setDataUpdate,
 }: {
   employee?: EmployeeProp | null | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,6 +38,30 @@ export default function FormLayout({
   setDataUpdate: any;
 }) {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+
+  // const mutation = useMutation('employee', {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries('employee');
+  //     alert('user added');
+  //   }
+  // })
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      // console.log(data, "MYNEWDATA");
+      dispatch(createNewEmployee({ ...data, id: uuidv4() }));
+    },
+    onSuccess: () => {
+      alert('Data Success');
+      queryClient.invalidateQueries({ queryKey: ['employee'] });
+    },
+    onError: () => {
+      alert('Data Failed');
+      queryClient.invalidateQueries({ queryKey: ['employee'] });
+    }
+  })
 
   const formik = useFormik<EmployeeType>({
     initialValues: {
@@ -94,16 +121,28 @@ export default function FormLayout({
     }),
     onSubmit: (values) => {
       if (employee) {
-        dispatch(updateEmployee(values));
-        setDataUpdate((e: number) => e + 1);
+        // // Update Employee // //
+
+
+
+        // dispatch(updateEmployee(values));
+        // setDataUpdate((e: number) => e + 1);
         close();
       } else {
-        dispatch(createNewEmployee({ ...values, id: uuidv4() }));
-        setDataUpdate((e: number) => e + 1);
+        // // Create New Employee // //
+
+
+
+        mutation.mutate(values)
+        // dispatch(createNewEmployee({ ...values, id: uuidv4() }));
+        // setDataUpdate((e: number) => e + 1);
         navigate("/m2-week1/table");
+        // mutation.mutate()
       }
     },
   });
+
+
 
   const navigate = useNavigate();
 
@@ -116,9 +155,11 @@ export default function FormLayout({
     touched,
     isSubmitting,
   } = formik;
+
   const errorcss: string = "text-red-700 mt-1 block";
   return (
     <div className="h-full">
+
       <form onSubmit={handleSubmit} className="grid grid-cols-12 gap-8 p-4">
         {/* Full Name */}
         <div className="col-span-8">
